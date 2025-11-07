@@ -1,0 +1,41 @@
+name: proj-openshift-chart-web
+
+# Kubernetes namespace to install into (can be overridden)
+namespace: nicolas-sierra-dev
+
+replicaCount: 1
+
+
+image:
+  repository: jesusnicolassierra/proj-openshift-web
+  # This sets the pull policy for images.
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "build-{{ tag }}"
+
+service:
+  type: ClusterIP
+  port: 3000
+
+resources:
+  requests:
+    cpu: "500m"
+    memory: "800Mi"
+  limits:
+    cpu: "1000m"
+    memory: "1500Mi"
+
+hpa:
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 75
+
+configMap:
+  enabled: true
+  data:
+    NODE_ENV: "production"
+    BACKEND_URL: "http://proj-openshift-db-proj-openshift-chart:8080/api/personas"
+
+
+secret:
+  enabled: false

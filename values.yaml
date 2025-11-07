@@ -40,7 +40,27 @@ configMap:
 secret:
   enabled: false
 
+
 livenessProbe:
-  enabled: false
+  enabled: true
+  httpGet:
+    path: /
+    port: http
+    scheme: HTTP
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3
+
 readinessProbe:
-  enabled: false
+  enabled: true
+  httpGet:
+    path: /
+    port: http
+    scheme: HTTP
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 3

@@ -1,0 +1,14 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      # Usar host.docker.internal para conectar al backend en la máquina host
+      - BACKEND_URL=http://host.docker.internal:8080/api/personas
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

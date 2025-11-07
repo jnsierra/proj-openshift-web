@@ -7,8 +7,8 @@ export interface Usuario {
   edad: number;
 }
 
-// URL del backend externo
-const BACKEND_URL = "http://localhost:8080/api/personas";
+// URL del backend externo (configurable via variable de entorno)
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:8080/api/personas";
 
 // GET - Obtener todos los usuarios desde el backend externo
 export async function GET() {

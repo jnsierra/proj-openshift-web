@@ -16,6 +16,15 @@ npm start            # Start production server
 npm run lint         # Run ESLint
 ```
 
+### Docker deployment
+```bash
+docker build -t proj-openshift-web .           # Build Docker image
+docker-compose up -d                           # Run with Docker Compose
+docker-compose down                            # Stop containers
+```
+
+See `DOCKER_DEPLOYMENT.md` for complete Docker deployment instructions.
+
 ## Architecture
 
 ### Next.js App Router Structure
@@ -32,10 +41,10 @@ The project uses Next.js App Router (not Pages Router) with the following struct
 
 ### Data Management Pattern
 
-**In-memory data storage**: The application uses an in-memory array in `app/api/usuarios/route.ts` to store user data. This means:
-- Data resets on server restart
-- Not suitable for production without migrating to a database
-- The `usuarios` array is defined at module level and shared across requests
+**External Backend API**: The application acts as a proxy to an external backend API:
+- GET/POST requests to `/api/usuarios` are forwarded to the backend at `http://localhost:8080/api/personas`
+- Backend URL is configurable via `BACKEND_URL` environment variable (see `.env.example`)
+- When running in Docker, use `host.docker.internal:8080` instead of `localhost:8080` to reach the host machine
 
 ### API Routes
 

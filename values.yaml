@@ -39,3 +39,8 @@ configMap:
 
 secret:
   enabled: false
+
+livenessProbe:
+  enabled: false
+readinessProbe:
+  enabled: false
